@@ -1,5 +1,4 @@
 #include "Board.h"
-#include "Cell.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -26,7 +25,7 @@ std::cout<<"\nN Queen Problem Solver \n\n";
 
 Board board = ProgramSetUpPrompt();
 
-board.PrintSolution();
+board.Solve();
 
 return 0;
 }
@@ -37,10 +36,10 @@ return 0;
 Board ProgramSetUpPrompt(){
     int queen;
     int size;
-    std::cout<<"Please input the amount of queens\n>";
+    std::cout<<"Please input the amount of queens\n> ";
     std::cin>>queen;
 
-    std::cout<<"Please input the chess board size\n>";
+    std::cout<<"Please input the chess board size\n> ";
     std::cin>>size;
 
     Board board(size,queen);

@@ -4,7 +4,6 @@
 PROGRAM_NAME = NQueenSolver
 
 CLASS = Board
-CLASS2 = Cell
 MAIN = NQueenSolver
 
 #compiler info
@@ -20,19 +19,16 @@ CC_FLAGS= $(CC_VERSION) -Wall
 
 all: $(PROGRAM_NAME) 
 
-$(PROGRAM_NAME): $(CLASS).o $(CLASS2).o $(MAIN).o 
-	$(CC) $(CFLAGS) -o $(PROGRAM_NAME) $(CLASS).o $(CLASS2).o $(MAIN).o
+$(PROGRAM_NAME): $(CLASS).o $(MAIN).o 
+	$(CC) $(CFLAGS) -o $(PROGRAM_NAME) $(CLASS).o  $(MAIN).o
 
 # making class 1
 $(CLASS).o: $(CLASS).cpp $(CLASS).h
 	$(CC) $(CFLAGS) -c $(CLASS).cpp
 
-# making class 2
-$(CLASS2).o: $(CLASS2).cpp $(CLASS2).h
-	$(CC) $(CFLAGS) -c $(CLASS2).cpp
 
 # making main
-$(MAIN).o: $(MAIN).cpp $(CLASS).h  $(CLASS2).h
+$(MAIN).o: $(MAIN).cpp $(CLASS).h 
 	$(CC) $(CFLAGS) -c $(MAIN).cpp
 
 #clean targets  

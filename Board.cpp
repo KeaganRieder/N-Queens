@@ -15,60 +15,36 @@ void Board::InitializeBoard()
 {
     for (int x = 0; x < dimension; x++)
     {
-        std::vector<char> boardY;
+        std::vector<int> boardY;
         for (int y = 0; y < dimension; y++)
         {
-            boardY.push_back('_');
+            boardY.push_back(0);
         }
         boardBody.push_back(boardY);
     }
 }
 
-bool Board::ValidMove(std::vector<std::vector<char>> boardBody, int x, int y)
+bool Board::ValidMove(std::vector<std::vector<int>> board, int row, int col)
 {
-    int row;
-    int col;
-
-    // checking, columns
-    for (col = 0; col < dimension; col++)
+    // check columns
+    for (int y = 0; y < col; y++)
     {
-        if (boardBody[x][col] == 'Q')
+        if (board[row][y] == 1)
         {
             return false;
         }
     }
-
-    // checking Up, left diagonal
-    for (row = x, col = y; row >= 0 && col >= 0; row--, col--)
+    // check diagonal going left and down
+    for (int x = row, y = col; x >= 0 && y >= 0; x--, y--)
     {
-        if (boardBody[row][col] == 'Q')
+        if (board[x][y] == 1)
         {
             return false;
         }
     }
-
-    // checking up, right diagonal
-    for (row = x, col = y; row <= dimension && col >= 0; row++, col--)
+    for (int x = row, y = col; x < dimension && y >= 0; x++, y--)
     {
-        if (boardBody[row][col] == 'Q')
-        {
-            return false;
-        }
-    }
-
-    // checking down, left diagonal
-    for (row = x, col = y; row >= 0 && col <= dimension; row--, col++)
-    {
-        if (boardBody[row][col] == 'Q')
-        {
-            return false;
-        }
-    }
-
-    // checking down, right diagonal
-    for (row = x, col = y; row <= dimension && col <= dimension; row++, col++)
-    {
-        if (boardBody[row][col] == 'Q')
+        if (board[x][y] == 1)
         {
             return false;
         }
@@ -77,37 +53,37 @@ bool Board::ValidMove(std::vector<std::vector<char>> boardBody, int x, int y)
     return true;
 }
 
-bool Board::PlaceQueen(std::vector<std::vector<char>> &board, int col, int queens)
+bool Board::PlaceQueen(std::vector<std::vector<int>> &board, int col, int queens) // maybe switch rows with columns
 {
-    //check if columns are still less then dimension
-    if (col >= dimension)
+    // check if columns are still less then dimension
+    if (col == dimension)
     {
         // it's not so see if you added all th desired queens
         if (queens == totalQueens)
         {
             return true;
-        }        
-        
-        //lacking some amount of queens so this isn't solution
+        }
+
+        // lacking some amount of queens so this isn't solution
         return false;
     }
-    
-    //they are still les so run through all rows
+
+    // they are still les so run through all rows
     for (int row = 0; row < dimension; row++)
     {
         if (ValidMove(board, row, col))
         {
-            board[row][col] = 'Q';
+            board[row][col] = 1;
             queens++;
 
-            if (PlaceQueen(board, col+1,queens))
+            if (PlaceQueen(board, col + 1, queens))
             {
                 return true;
             }
 
-            //backtracking
-            board[row][col] = '_';
-            queens--;            
+            // backtracking
+            board[row][col] = 0;
+            queens--;
         }
     }
 
@@ -116,30 +92,48 @@ bool Board::PlaceQueen(std::vector<std::vector<char>> &board, int col, int queen
 
 void Board::Solve()
 {
-    if(PlaceQueen(boardBody, 0, 0)){
+    if (PlaceQueen(boardBody, 0, 0))
+    {
         PrintSolution();
     }
-    else{
-        //print no solution 
+    else
+    {
+        std::cout << "\n> There is no solution on a "
+                  << dimension << " X " << dimension << " board with " << totalQueens << " Queens\n";
     }
 }
 
 void Board::PrintSolution()
 {
     std::cout << "\n> The following is the solution on a "
-              << dimension << "X" << dimension << " board for " << totalQueens << " Queens\n\n";
+              << dimension << " X " << dimension << " board with " << totalQueens << " Queens\n\n";
 
     for (int x = 0; x < dimension; x++)
     {
-        std::cout << "| ";
+        std::cout << std::string(4, '-');
+    }
+    std::cout << "-";
+
+    for (int x = 0; x < dimension; x++)
+    {
+        std::cout << "\n| ";
         for (int y = 0; y < dimension; y++)
         {
-            std::pair<int, int> cord;
-            cord.first = x;
-            cord.second = y;
-            // cord = boardBody[x][y].GetCord();
-            std::cout << cord.first << ", " << cord.second << " | ";
+            if (boardBody[x][y])
+            {
+                std::cout << "Q | ";
+            }
+            else
+            {
+                std::cout << "_ | ";
+            }
         }
-        std::cout << "\n";
+
+        std::cout << "\n-";
+        for (int x = 0; x < dimension; x++)
+        {
+            std::cout << std::string(4, '-');
+        }
     }
+    std::cout << "\n";
 }
