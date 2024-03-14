@@ -12,7 +12,8 @@ The solution fo this problem is one in which place all n queens on a s x s board
 row or diagonal. Which leads to the following restrictions about what s and n can equal in order to have a solution
 1. if s >= 1 then n = 1
 2. if s = 3 then n <= 2 
-3. for all instances where s >= 4, n <= s
+3. if s = 4 then n < s
+4. for all instances where s >= 5, n <= s
 
 with the restrictions on n and s now in place, the solution fir this problem can be found through the use of the backtracking algorithm.
 
