@@ -46,7 +46,7 @@ bool Board::PlaceQueen(std::vector<std::vector<int>> &board, int y, int queens){
 This if block in Place queen checks for if the col (current column) == dimension (user specified size of the  board) 
 if it doesn't then continue recursively running through board's states otherwise stop recursion and check if 
 queens (states current amount of queens placed) == totalQueens (goal amount of queens specified by user)
-if true then this is the solution of the user given scenario for the problem otherwise return false specified that there ins't
+if true then this is the solution of the user given scenario for the problem otherwise return false meaning that it's not
 
 ``` c++
   for (int x = 0; x < dimension; x++)
