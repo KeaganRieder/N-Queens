@@ -15,7 +15,7 @@ row or diagonal. Which leads to the following restrictions about what s and n ca
 3. for all instances where s >= 4, n <= s
 
 with the restrictions on n and s now in place, the the solution can be found using the backtracking algorithm which
-implementation and description of the process can be found [Here](#Solving_By_BackTracking)
+implementation and description of the process are as follows:
 
 ## Solving By BackTracking
 The backtracking algorithm is a modified version of the Depth first search algorithm, which runs through all possible
