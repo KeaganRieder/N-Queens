@@ -1,8 +1,8 @@
 # N-Queens Problem Solver
 
 ## table of contents 
-1. [Overview](Overview)
-1. [Solving By BackTracking](Solving_By_BackTracking)
+1. [Overview](#Overview)
+1. [Solving By BackTracking](#Solving_By_BackTracking)
 
 ## Overview  
 The n queens problem describe as when provided amount of queens represented as 'n' place them on a chessboard of size
@@ -14,13 +14,13 @@ row or diagonal. Which leads to the following restrictions about what s and n ca
 2. if s = 3 then n <= 2 
 3. for all instances where s >= 4, n <= s
 
-with the restrictions on n and s now in place, the the solution can be found using the backtracking algrothiom which
-implementation and description of the process can be found [Here](Solving_By_BackTracking)
+with the restrictions on n and s now in place, the the solution can be found using the backtracking algorithm which
+implementation and description of the process can be found [Here](#Solving_By_BackTracking)
 
 ## Solving By BackTracking
-The backtracking algrothiom is a modified version of the Depth first search algrothiom, which runs through all possible
-moves and if one doesn't work it back tracks. the algrothiom impletion can be found in [Board.cpp](Board.cpp) in the function
-[PlaceQueen](PlaceQueen)
+The backtracking algorithm is a modified version of the Depth first search algorithm, which runs through all possible
+moves and if one doesn't work it back tracks. the algorithm impletion can be found in [Board.cpp](Board.cpp) in the function
+[PlaceQueen](#PlaceQueen)
 
 ### PlaceQueen
 
@@ -28,8 +28,8 @@ moves and if one doesn't work it back tracks. the algrothiom impletion can be fo
 bool Board::PlaceQueen(std::vector<std::vector<int>> &board, int y, int queens){
 ```
 
-* "std::vector<std::vector<int>> &board" is current state of teh board the algrothiom is at
-* "int y"  represents the current row on the board the algrothiom is on
+* "std::vector<std::vector<int>> &board" is current state of teh board the algorithm is at
+* "int y"  represents the current row on the board the algorithm is on
 * "int queens" is amount of queens currently placed
 
 ``` C++
@@ -71,7 +71,7 @@ if true then this is the solution of the user given scenario for the problem oth
 }
 ```
 
-This part of place queen handles running through each column checking if it's a [ValidMove](ValidMove), if it is a valid cell then do 
+This part of place queen handles running through each column checking if it's a [ValidMove](#ValidMove), if it is a valid cell then do 
 the following:
 1. Place queen at current cell and then head to next row (next of the board state). 
 2. Ensuring none of the states are a solution which will result in the for loop terminating early and PlaceQueen return as true
@@ -88,7 +88,7 @@ it is implemented as followed
 bool Board::ValidMove(std::vector<std::vector<int>> board, int col, int row){
 ```
 
-* "std::vector<std::vector<int>> board" is current state of teh board the algrothiom is at
+* "std::vector<std::vector<int>> board" is current state of teh board the algorithm is at
 * "int row" is the current position in the row needing checked  
 * "int col" is the current position in the column needing checked
 
