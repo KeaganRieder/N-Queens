@@ -25,7 +25,7 @@ moves and if one doesn't work it back tracks. the algrothiom impletion can be fo
 ### PlaceQueen
 
 ``` C++
-bool Board::PlaceQueen(std::vector<std::vector<int>> &board, int y, int queens)
+bool Board::PlaceQueen(std::vector<std::vector<int>> &board, int y, int queens){
 ```
 
 * "std::vector<std::vector<int>> &board" is current state of teh board the algrothiom is at
@@ -67,6 +67,8 @@ if true then this is the solution of the user given scenario for the problem oth
             queens--;
         }
     }
+    return false;
+}
 ```
 
 This part of place queen handles running through each column checking if it's a [ValidMove](ValidMove), if it is a valid cell then do 
@@ -83,7 +85,7 @@ valid move is function which is used to ensure that queen are placed in valid po
 it is implemented as followed
 
 ```c++
-bool Board::ValidMove(std::vector<std::vector<int>> board, int col, int row)
+bool Board::ValidMove(std::vector<std::vector<int>> board, int col, int row){
 ```
 
 * "std::vector<std::vector<int>> board" is current state of teh board the algrothiom is at
@@ -125,6 +127,7 @@ those cells if theres is return false (not valid) otherwise move to final check
     }
 
     return true;
+}
 ```
 
 this for loop checks the lower diagonal on left side to ensure theres no queens which are placed in those cells
