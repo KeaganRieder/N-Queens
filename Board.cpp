@@ -24,25 +24,25 @@ void Board::InitializeBoard()
     }
 }
 
-bool Board::ValidMove(std::vector<std::vector<int>> board, int row, int col)
+bool Board::ValidMove(std::vector<std::vector<int>> board, int col, int row)
 {
-    // check columns
-    for (int y = 0; y < col; y++)
+    // check right side of row
+    for (int y = 0; y < row; y++)
     {
-        if (board[row][y] == 1)
+        if (board[col][y] == 1)
         {
             return false;
         }
     }
     // check diagonal going left and down
-    for (int x = row, y = col; x >= 0 && y >= 0; x--, y--)
+    for (int x = col, y = row; x >= 0 && y >= 0; x--, y--)
     {
         if (board[x][y] == 1)
         {
             return false;
         }
     }
-    for (int x = row, y = col; x < dimension && y >= 0; x++, y--)
+    for (int x = col, y = row; x < dimension && y >= 0; x++, y--)
     {
         if (board[x][y] == 1)
         {
@@ -53,10 +53,10 @@ bool Board::ValidMove(std::vector<std::vector<int>> board, int row, int col)
     return true;
 }
 
-bool Board::PlaceQueen(std::vector<std::vector<int>> &board, int col, int queens) // maybe switch rows with columns
+bool Board::PlaceQueen(std::vector<std::vector<int>> &board, int y, int queens) 
 {
-    // check if columns are still less then dimension
-    if (col == dimension)
+    // check if row is final one in board
+    if (y == dimension)
     {
         // it's not so see if you added all th desired queens
         if (queens == totalQueens)
@@ -68,21 +68,22 @@ bool Board::PlaceQueen(std::vector<std::vector<int>> &board, int col, int queens
         return false;
     }
 
-    // they are still les so run through all rows
-    for (int row = 0; row < dimension; row++)
+    // run through current row
+    for (int x = 0; x < dimension; x++)
     {
-        if (ValidMove(board, row, col))
+        if (ValidMove(board, x, y))
         {
-            board[row][col] = 1;
+            //place queen
+            board[x][y] = 1; 
             queens++;
 
-            if (PlaceQueen(board, col + 1, queens))
+            if (PlaceQueen(board, y + 1, queens))
             {
                 return true;
             }
 
-            // backtracking
-            board[row][col] = 0;
+            // remove queen (backtrack)
+            board[x][y] = 0;
             queens--;
         }
     }
