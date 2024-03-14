@@ -10,9 +10,9 @@ s x s, such that no two queens are threatening one another
 
 The solution fo this problem is one in which place all n queens on a s x s board where no two queen are in the same column,
 row or diagonal. Which leads to the following restrictions about what s and n can equal in order to have a solution
-1.if s = 1 then n = 1
-2.for all instances where s <= 4, n < s
-3.for all instances where s >= 5, n <= s
+1. if s = 1 then n = 1
+2. for all instances where s <= 4, n < s
+3. for all instances where s >= 5, n <= s
 
 with the restrictions on n and s now in place, the solution fir this problem can be found through the use of the backtracking algorithm.
 
