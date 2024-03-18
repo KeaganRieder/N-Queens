@@ -11,8 +11,8 @@ s x s, such that no two queens are threatening one another
 The solution fo this problem is one in which place all n queens on a s x s board where no two queen are in the same column,
 row or diagonal. Which leads to the following restrictions about what s and n can equal in order to have a solution
 1. if s = 1 then n = 1
-2. for all instances where s <= 4, n < s
-3. for all instances where s >= 5, n <= s
+2. for all instances where s < 3, n < s
+3. for all instances where s >= 4, n <= s
 
 with the restrictions on n and s now in place, the solution fir this problem can be found through the use of the backtracking algorithm.
 
@@ -112,7 +112,6 @@ currently trying to be placed at if there is then return false (not valid) other
         }
     }
 ```
-
 this for loop checks the upper diagonal on left side to see if there are any queens place in
 those cells if theres is return false (not valid) otherwise move to final check
 
@@ -128,6 +127,5 @@ those cells if theres is return false (not valid) otherwise move to final check
     return true;
 }
 ```
-
 this for loop checks the lower diagonal on left side to ensure theres no queens which are placed in those cells
 if theres is return false (not valid) otherwise return true (valid move) sense all other checks were passed
