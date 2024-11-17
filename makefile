@@ -2,41 +2,89 @@
 
 # programs and their associated classes
 PROGRAM_NAME = NQueenSolver
+INCLUDE_DIR = include
+SRC_DIR = src
+OBJ_DIR = obj
 
-CLASS = Board
-MAIN = NQueenSolver
+SOURCE_FILES = $(wildcard $(SRC_DIR)/*.cpp)
+OBJECT_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCE_FILES))
 
-#compiler info
-CC=g++
-CC_VERSION= -std=c++11
-CC_FLAGS= $(CC_VERSION) -Wall
+LIBS = # Add necessary libraries here, e.g., -lm, -lGL, etc.
 
-#files for Projects
-# OBJS = $(CLASS).0 $(CLASS2).0 $(MAIN).0 $(PROGRAM_NAME).0
+################################################################################
+# Compiler setup
+################################################################################
 
-# Default goal
-.DEFAULT_GOAL := all
+# Compiler info
+CC = g++
+CC_VERSION = -std=c++11
+INCLUDE = -I$(INCLUDE_DIR) 
+CC_FLAGS = $(CC_VERSION) $(INCLUDE) -static
 
-all: $(PROGRAM_NAME) 
+OS_NAME := $(shell uname -s || echo Windows_NT)
 
-$(PROGRAM_NAME): $(CLASS).o $(MAIN).o 
-	$(CC) $(CFLAGS) -o $(PROGRAM_NAME) $(CLASS).o  $(MAIN).o
+# If operating system is Linux
+ifeq ($(OS_NAME), Linux)
+    BUILD_TARGET = Compile_Project
+    CLEANTARGET = linux_clean
 
-# making class 1
-$(CLASS).o: $(CLASS).cpp $(CLASS).h
-	$(CC) $(CFLAGS) -c $(CLASS).cpp
+# If operating system is Windows / MINGW64
+else ifeq ($(OS_NAME), Windows_NT)
+    BUILD_TARGET = Compile_Project
+    CLEANTARGET = win_clean
 
+# Operating system is unknown/not set up for building
+else
+    CC_FLAGS += -DUNKNOWN
+    BUILD_TARGET = unknown_build
+    CLEANTARGET = unknown_clean
 
-# making main
-$(MAIN).o: $(MAIN).cpp $(CLASS).h 
-	$(CC) $(CFLAGS) -c $(MAIN).cpp
+endif
 
-#clean targets  
-cleanLinix:
-	rm -rf *.o *.exe
-	
-cleanWin:
-	del *.o *.exe
+################################################################################
+# Build targets
+################################################################################
 
+# Default Goal
+.DEFAULT_GOAL := All
+.PHONY: All clean linux_clean win_clean unknown_clean
 
-	
+################################################################################
+# Compilation targets
+################################################################################
+
+All: $(BUILD_TARGET)
+
+# Build for Linux or Windows systems 
+Compile_Project: $(PROGRAM_NAME)
+
+$(PROGRAM_NAME): $(OBJECT_FILES) $(PROGRAM_NAME).cpp
+	$(CC) $(CC_FLAGS) -o $@ $^ $(LIBS)
+
+# Rule to compile .o files from .cpp files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDE_DIR)/*.h | $(OBJ_DIR)
+	$(CC) $(CC_FLAGS) -c $< -o $@
+
+# Create obj directory if it doesn't exist
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+# Build for unknown or unconfigured system
+unknown_build:
+	@echo "Can't build. $(OS_NAME) is unknown or not configured."
+
+################################################################################
+# Clean-up targets
+################################################################################
+
+clean: $(CLEANTARGET)
+
+win_clean:
+	rmdir /S /Q $(OBJ_DIR) || true
+	del *.o *.exe || true
+
+linux_clean:
+	rm -rf $(OBJ_DIR) *.o *.exe
+
+unknown_clean:
+	@echo "No clean-up for unknown system."
